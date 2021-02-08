@@ -55,7 +55,7 @@ sub new {
         # Called as a class method as in CGI::Session->new()
         #
 
-        # Start fresh with error reporting. Errors in past objects shouldn't affect this one. 
+        # Start fresh with error reporting. Errors in past objects shouldn't affect this one.
         $class->set_error('');
 
         $self = $class->load( @args );
@@ -119,14 +119,14 @@ sub _driver {
     return $self->{_OBJECTS}->{driver};
 }
 
-sub _serializer     { 
+sub _serializer     {
     my $self = shift;
     defined($self->{_OBJECTS}->{serializer}) and return $self->{_OBJECTS}->{serializer};
     return $self->{_OBJECTS}->{serializer} = "CGI::Session::Serialize::" . $self->{_DSN}->{serializer};
 }
 
 
-sub _id_generator   { 
+sub _id_generator   {
     my $self = shift;
     defined($self->{_OBJECTS}->{id}) and return $self->{_OBJECTS}->{id};
     return $self->{_OBJECTS}->{id} = "CGI::Session::ID::" . $self->{_DSN}->{id};
@@ -168,14 +168,14 @@ sub query {
 sub name {
     my $self = shift;
     my $name = shift;
-    
+
     if (ref $self) {
         unless ( defined $name ) {
             return $self->{_NAME} || $CGI::Session::NAME;
         }
         return $self->{_NAME} = $name;
     }
-    
+
     $CGI::Session::NAME = $name if defined $name;
     return $CGI::Session::NAME;
 }
@@ -217,13 +217,13 @@ sub _test_status {
 sub flush {
     my $self = shift;
 
-    # Would it be better to die or err if something very basic is wrong here? 
+    # Would it be better to die or err if something very basic is wrong here?
     # I'm trying to address the DESTROY related warning
     # from: http://rt.cpan.org/Ticket/Display.html?id=17541
     # return unless defined $self;
 
     return unless $self->id;            # <-- empty session
-    
+
     # neither new, nor deleted nor modified
     return if !defined($self->{_STATUS}) or $self->{_STATUS} == STATUS_UNSET;
 
@@ -339,10 +339,10 @@ sub cookie {
 
     if ( $self->is_expired ) {
         $cookie = $query->cookie( -name=>$self->name, -value=>$self->id, -expires=> '-1d', @_ );
-    } 
+    }
     elsif ( my $t = $self->expire ) {
         $cookie = $query->cookie( -name=>$self->name, -value=>$self->id, -expires=> '+' . $t . 's', @_ );
-    } 
+    }
     else {
         $cookie = $query->cookie( -name=>$self->name, -value=>$self->id, @_ );
     }
@@ -411,7 +411,7 @@ sub find {
     # find( \%code )
     if ( @_ == 1 ) {
         $coderef = $_[0];
-    } 
+    }
     # find( $dsn, \&code, \%dsn_args )
     else {
         ($dsn, $coderef, $dsn_args) = @_;
@@ -461,7 +461,7 @@ sub find {
 
 =head1 NAME
 
-CGI::Session - persistent session data in CGI applications
+CGI::Session - Persistent session data in CGI applications
 
 =head1 SYNOPSIS
 
@@ -720,7 +720,7 @@ sub load {
     unless ( defined $raw_data ) {
         return $self->set_error( "load(): couldn't retrieve data: " . $driver->errstr );
     }
-    
+
     # Requested session couldn't be retrieved
     return $self unless $raw_data;
 
@@ -773,12 +773,12 @@ sub load {
         $self->{_DATA}->{_SESSION_ATIME} = time();      # <-- updating access time
         $self->_set_status( STATUS_MODIFIED );          # <-- access time modified above
     }
-    
+
     return $self;
 }
 
 
-# set the input as a query object or session ID, depending on what it looks like.  
+# set the input as a query object or session ID, depending on what it looks like.
 sub _set_query_or_sid {
     my $self = shift;
     my $query_or_sid = shift;
@@ -935,7 +935,7 @@ Second form sets an expiration time. This value is checked when previously store
 
 By using the third syntax you can set the expiration interval for a particular
 session parameter, say I<~logged-in>. This would cause the library call clear()
-on the parameter when its time is up. Note it only makes sense to set this value to 
+on the parameter when its time is up. Note it only makes sense to set this value to
 something I<earlier> than when the whole session expires.  Passing 0 cancels expiration.
 
 All the time values should be given in the form of seconds. Following keywords are also supported for your convenience:
@@ -1081,7 +1081,7 @@ during a session, you can consider enabling an option to make this check:
     use CGI::Session '-ip_match';
 
 Usually you don't call ip_match() directly, but by using the above method. It is useful
-only if you want to call it inside of coderef passed to the L<find()|/"find( \&code )"> method. 
+only if you want to call it inside of coderef passed to the L<find()|/"find( \&code )"> method.
 
 =head2 delete()
 
@@ -1146,14 +1146,14 @@ with the parameters you want. For example:
 
     CGI::Session->find($dsn, sub { my_subroutine( @_, 'param 1', 'param 2' ) } );
     CGI::Session->find($dsn, sub { $coderef->( @_, $extra_arg ) } );
-    
+
 Or if you wish, you can define a sub generator as such:
 
     sub coderef_with_args {
         my ( $coderef, @params ) = @_;
         return sub { $coderef->( @_, @params ) };
     }
-    
+
     CGI::Session->find($dsn, coderef_with_args( $coderef, 'param 1', 'param 2' ) );
 
 =item \%dsn_args
@@ -1330,7 +1330,7 @@ L<static|CGI::Session::ID::static> - generates static session ids. B<CGI::Sessio
 =head1 A Warning about Auto-flushing
 
 Auto-flushing can be unreliable for the following reasons. Explicit flushing
-after key session updates is recommended. 
+after key session updates is recommended.
 
 =over 4
 
@@ -1465,25 +1465,15 @@ suggestions, and battled publicly with bugs, all of which has helped.
 Copyright (C) 2001-2005 Sherzod Ruzmetov E<lt>sherzodr@cpan.orgE<gt>. All rights reserved.
 This library is free software. You can modify and or distribute it under the same terms as Perl itself.
 
-=head1 PUBLIC CODE REPOSITORY
+=head1 Repository
 
-You can see what the developers have been up to since the last release by
-checking out the code repository. You can browse the git repository from here:
+L<https://github.com/ronsavage/DBIx-Admin-TableInfo>
 
- http://github.com/cromedome/cgi-session/tree/master
+=head1 Support
 
-Or check out the code with:
+Bugs should be reported via the CPAN bug tracker at
 
- git clone git://github.com/cromedome/cgi-session.git
-
-=head1 SUPPORT
-
-If you need help using CGI::Session, ask on the mailing list. You can ask the
-list by sending your questions to cgi-session-user@lists.sourceforge.net .
-
-You can subscribe to the mailing list at https://lists.sourceforge.net/lists/listinfo/cgi-session-user .
-
-Bug reports can be submitted at http://rt.cpan.org/NoAuth/ReportBug.html?Queue=CGI-Session
+L<https://github.com/ronsavage/DBIx-Admin-TableInfo/issues>
 
 =head1 AUTHOR
 
@@ -1493,12 +1483,11 @@ Mark Stosberg became a co-maintainer during the development of 4.0. C<markstos@c
 
 Ron Savage became a co-maintainer during the development of 4.30. C<rsavage@cpan.org>.
 
-If you would like support, ask on the mailing list as describe above. The
-maintainers and other users are subscribed to it. 
+=head1 SEE ALSO
 
-=head1 SEE ALSO 
+L<Data::Session>, which supercedes this module.
 
-To learn more both about the philosophy and CGI::Session programming style,
+Also, to learn more both about the philosophy and CGI::Session programming style,
 consider the following:
 
 =over 4
@@ -1507,19 +1496,13 @@ consider the following:
 
 L<CGI::Session::Tutorial|CGI::Session::Tutorial> - extended CGI::Session manual. Also includes library architecture and driver specifications.
 
-=item *
-
-We also provide mailing lists for CGI::Session users. To subscribe to the list
-or browse the archives visit
-https://lists.sourceforge.net/lists/listinfo/cgi-session-user
-
 =item * B<RFC 2109> - The primary spec for cookie handing in use, defining the  "Cookie:" and "Set-Cookie:" HTTP headers.
-Available at L<http://www.ietf.org/rfc/rfc2109.txt>. A newer spec, RFC 2965 is meant to obsolete it with "Set-Cookie2" 
+Available at L<http://www.ietf.org/rfc/rfc2109.txt>. A newer spec, RFC 2965 is meant to obsolete it with "Set-Cookie2"
 and "Cookie2" headers, but even of 2008, the newer spec is not widely supported. See L<http://www.ietf.org/rfc/rfc2965.txt>
 
 =item *
 
-L<Apache::Session|Apache::Session> - an alternative to CGI::Session.
+L<Apache::Session|Apache::Session>
 
 =back
 

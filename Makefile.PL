@@ -118,22 +118,37 @@ print "-" x 40, "\n";
 create_changelog_ini();
 print "-" x 40, "\n";
 
-WriteMakefile(
-    NAME         => 'CGI::Session',
-    VERSION_FROM => 'lib/CGI/Session.pm',
-    PL_FILES     => {},
-    PREREQ_PM    => {
-        'CGI'               => 3.26,
-        'Digest::MD5'       => 0,
-        'Data::Dumper'      => 0,
-#		'Test::Differences' => 0,
-        'Test::More'        => 0,
-        'Scalar::Util'      => 0,
+my(%params) =
+(
+	($] ge '5.005') ?
+	(
+		'AUTHOR'	=> 'Sherzod Ruzmetov <sherzodr@cpan.org>',
+		'ABSTRACT'	=> 'Persistent session data in CGI applications',
+    ) : (),
+	clean =>
+	{
+		FILES => 'blib/* Makefile MANIFEST CGI-Session-* t/cgisess.* t/sessiondata'
+	},
+	dist =>
+	{
+		COMPRESS	=> 'gzip',
+		SUFFIX		=> 'gz'
+	},
+	NAME         => 'CGI::Session',
+	LICENSE		=> 'perl',
+	PL_FILES     => {},
+	PREREQ_PM    => {
+		'CGI'               => 3.26,
+		'Digest::MD5'       => 0,
+		'Data::Dumper'      => 0,
+		'Test::More'        => 0,
+		'Scalar::Util'      => 0,
     },
-    ABSTRACT => 'Persistent session data in CGI applications',
-    AUTHOR   => 'Sherzod Ruzmetov <sherzodr@cpan.org>',
-    clean    => { FILES => [ 't/cgisess.*', 't/sessiondata' ] },
-    EXTRA_META => "
+	TEST_REQUIRES =>
+	{
+		'Test::More' => 0,
+	},
+	EXTRA_META => "
 no_index:
     package:
     - CGI::Session::Test::SimpleObjectClass
@@ -141,20 +156,51 @@ no_index:
     - OverloadedObjectClass
     - OverloadedClass
 ",
+	VERSION_FROM	=> 'lib/CGI/Session.pm',
+	INSTALLDIRS		=> 'site',
+	EXE_FILES		=> [],
 );
+
+
+if ( ($ExtUtils::MakeMaker::VERSION =~ /^\d\.\d\d$/) && ($ExtUtils::MakeMaker::VERSION > 6.30) )
+{
+	$params{LICENSE} = 'perl';
+}
+
+if ($ExtUtils::MakeMaker::VERSION ge '6.46')
+{
+	$params{META_MERGE} =
+	{
+		'meta-spec' =>
+		{
+			version => 2,
+		},
+		resources   =>
+		{
+			bugtracker =>
+			{
+				web => 'https://github.com/ronsavage/CGI-Session/issues',
+			},
+			license		=> 'http://opensource.org/licenses/Perl',
+			repository	=>
+			{
+				type	=> 'git',
+				url		=> 'https://github.com/ronsavage/CGI-Session.git',
+				web		=> 'https://github.com/ronsavage/CGI-Session',
+			},
+		},
+	};
+}
+
+WriteMakefile(%params);
 
 #
 # Creating place for test-scripts. Some of the scripts needs this to be present
 #
 mkdir(File::Spec->catfile('t', 'sessiondata'));
 
-
-
 package MY;
 use strict;
-
-
-
 
 sub postamble {
     return <<'MAKE_TEXT';
@@ -162,9 +208,6 @@ prepare_dist ::	metafile manifest dist
 	$(NOECHO) $(NOOP)
 MAKE_TEXT
 }
-
-
-
 
 sub libscan {
     my ($self, $path) = @_;
