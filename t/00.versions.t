@@ -5,14 +5,15 @@ use warnings;
 
 # I tried 'require'-ing modules but that did not work.
 
-use Config::Tiny; # For the version #.
+use CGI::Session; # For the version #.
 
 use Test::More;
 
-use File::Spec;
-use File::Temp;
-use strict;
-use utf8;
+use CGI;
+use Digest::MD5;
+use Data::Dumper;
+use Test::More;
+use Scalar::Util;
 
 # ----------------------
 
@@ -20,13 +21,14 @@ pass('All external modules loaded');
 
 my(@modules) = qw
 /
-	File::Spec
-	File::Temp
-	strict
-	utf8
+	CGI
+	Digest::MD5
+	Data::Dumper
+	Test::More
+	Scalar::Util
 /;
 
-diag "Testing Config::Tiny V $Config::Tiny::VERSION";
+diag "Testing CGI::Session V $CGI::Session::VERSION";
 
 for my $module (@modules)
 {
