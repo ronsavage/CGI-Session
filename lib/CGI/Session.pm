@@ -505,6 +505,9 @@ CGI::Session - Persistent session data in CGI applications
 
 CGI::Session provides an easy, reliable and modular session management system across HTTP requests.
 
+But, you are strongly advised to use L<Data::Session> instead. In other words, this module is
+deprecated.
+
 =head1 METHODS
 
 Following is the overview of all the available methods accessible via CGI::Session object.
