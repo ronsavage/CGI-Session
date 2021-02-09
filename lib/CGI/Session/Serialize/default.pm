@@ -1,7 +1,5 @@
 package CGI::Session::Serialize::default;
 
-# $Id$ 
-
 use strict;
 use Safe;
 use Data::Dumper;
@@ -12,12 +10,12 @@ use vars qw( %overloaded );
 require overload;
 
 @CGI::Session::Serialize::default::ISA = ( "CGI::Session::ErrorHandler" );
-$CGI::Session::Serialize::default::VERSION = '4.43';
 
+our $VERSION = '4.50';
 
 sub freeze {
     my ($class, $data) = @_;
-    
+
     my $d =
     new Data::Dumper([$data], ["D"]);
     $d->Indent( 0 );
@@ -26,7 +24,7 @@ sub freeze {
     $d->Deepcopy( 0 );
     $d->Quotekeys( 1 );
     $d->Terse( 0 );
-    
+
     # ;$D added to make certain we get our data structure back when we thaw
     return $d->Dump() . ';$D';
 }
@@ -55,7 +53,7 @@ sub __walk {
     while (@filter) {
 		defined(my $x = shift @filter) or next;
         $seen{refaddr $x || ''}++ and next;
-          
+
         my $r = reftype $x or next;
         if ($r eq "HASH") {
             # we use this form to make certain we have aliases
@@ -69,11 +67,11 @@ sub __walk {
     }
 }
 
-# we need to do this because the values we get back from the safe compartment 
+# we need to do this because the values we get back from the safe compartment
 # will have packages defined from the safe compartment's *main instead of
 # the one we use
 sub __scan {
-    # $_ gets aliased to each value from @_ which are aliases of the values in 
+    # $_ gets aliased to each value from @_ which are aliases of the values in
     #  the current data structure
     for (@_) {
         if (blessed $_) {
@@ -85,7 +83,7 @@ sub __scan {
                 if (exists $overloaded{$address}) {
                     $_ = $overloaded{$address};
                 } else {
-                    my $reftype = reftype $_;                
+                    my $reftype = reftype $_;
                     if ($reftype eq "HASH") {
                         $_ = $overloaded{$address} = bless { %$_ }, ref $_;
                     } elsif ($reftype eq "ARRAY") {

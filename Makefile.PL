@@ -137,16 +137,23 @@ my(%params) =
 	NAME         => 'CGI::Session',
 	LICENSE		=> 'perl',
 	PL_FILES     => {},
-	PREREQ_PM    => {
+	PREREQ_PM    =>
+	{
 		'CGI'               => 3.26,
 		'Digest::MD5'       => 0,
 		'Data::Dumper'      => 0,
-		'Test::More'        => 0,
+		'FreezeThaw'		=> 0,
+		'overload'			=> 0,
+		'Safe'				=> 0,
 		'Scalar::Util'      => 0,
+		'Storable'			=> 0,
+		'strict'			=> 0,
+		'vars'				=> 0,
     },
 	TEST_REQUIRES =>
 	{
-		'Test::More' => 0,
+		'Env'			=> 0,
+		'Test::More'	=> 0,
 	},
 	EXTRA_META => "
 no_index:

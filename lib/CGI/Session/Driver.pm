@@ -1,13 +1,13 @@
 package CGI::Session::Driver;
 
 use strict;
-#
 
 use Carp;
 use CGI::Session::ErrorHandler;
 
-$CGI::Session::Driver::VERSION = '4.49';
-@CGI::Session::Driver::ISA     = qw(CGI::Session::ErrorHandler);
+@CGI::Session::Driver::ISA = qw(CGI::Session::ErrorHandler);
+
+our $VERSION = '4.50';
 
 sub new {
     my $class = shift;
@@ -154,7 +154,7 @@ Following list describes every driver method, including its argument list and wh
 
 =item retrieve($self, $sid)
 
-Called whenever a specific session is requested either via C<< CGI::Session->new() >> or C<< CGI::Session->load() >> syntax. Method should try to retrieve data associated with C< $sid > and return it. In case no data could be retrieved for C< $sid > 0 (zero) or "" should be returned. undef must be returned only to signal error. Error message should be set via set_error(), which can be inherited from L<CGI::Session::ErrorHandler|CGI::Session::ErrorHandler>. 
+Called whenever a specific session is requested either via C<< CGI::Session->new() >> or C<< CGI::Session->load() >> syntax. Method should try to retrieve data associated with C< $sid > and return it. In case no data could be retrieved for C< $sid > 0 (zero) or "" should be returned. undef must be returned only to signal error. Error message should be set via set_error(), which can be inherited from L<CGI::Session::ErrorHandler|CGI::Session::ErrorHandler>.
 
 Tip: set_error() always returns undef. Use it for your advantage.
 

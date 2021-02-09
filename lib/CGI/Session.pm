@@ -4,9 +4,10 @@ use Carp;
 use CGI::Session::ErrorHandler;
 
 @CGI::Session::ISA      = qw( CGI::Session::ErrorHandler );
-$CGI::Session::VERSION  = '4.49';
 $CGI::Session::NAME     = 'CGISESSID';
 $CGI::Session::IP_MATCH = 0;
+
+our $VERSION = '4.50';
 
 sub STATUS_UNSET    () { 1 << 0 } # denotes session that's resetted
 sub STATUS_NEW      () { 1 << 1 } # denotes session that's just created

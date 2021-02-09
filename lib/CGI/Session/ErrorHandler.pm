@@ -1,9 +1,8 @@
 package CGI::Session::ErrorHandler;
 
-# $Id$
-
 use strict;
-$CGI::Session::ErrorHandler::VERSION = '4.49';
+
+our $VERSION = '4.50';
 
 =pod
 
@@ -48,11 +47,11 @@ sub set_error {
 
 =item errstr()
 
-Returns whatever value was set by the most recent call to set_error(). If no message as has been set yet, the empty string is returned so the message can still concatenate without a warning. 
+Returns whatever value was set by the most recent call to set_error(). If no message as has been set yet, the empty string is returned so the message can still concatenate without a warning.
 
 =back
 
-=cut 
+=cut
 
 *error = \&errstr;
 sub errstr {

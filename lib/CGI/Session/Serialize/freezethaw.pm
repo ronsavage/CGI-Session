@@ -1,13 +1,12 @@
 package CGI::Session::Serialize::freezethaw;
 
-# $Id$ 
-
 use strict;
 use FreezeThaw;
 use CGI::Session::ErrorHandler;
 
-$CGI::Session::Serialize::freezethaw::VERSION = 4.43;
-@CGI::Session::Serialize::freezethaw::ISA     = ( "CGI::Session::ErrorHandler" );
+@CGI::Session::Serialize::freezethaw::ISA = ( "CGI::Session::ErrorHandler" );
+
+our $VERSION = '4.50';
 
 sub freeze {
     my ($self, $data) = @_;
