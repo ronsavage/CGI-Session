@@ -1,6 +1,6 @@
 package CGI::Session;
 
-our $VERSION = '4.50';
+use base 'CGI::Session::ErrorHandler';
 use strict;
 
 use Carp;
