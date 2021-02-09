@@ -9,11 +9,24 @@ use CGI::Session; # For the version #.
 
 use Test::More;
 
+use base;
 use CGI;
 use Digest::MD5;
 use Data::Dumper;
-use Test::More;
+use DB_File;
+use DBD::Pg;
+use DBI;
+use Digest::MD5;
+use Fcntl;
+use File::Basename;
+use File::Spec;
+use FreezeThaw;
+use overload;
+use Safe;
 use Scalar::Util;
+use Storable;
+use strict;
+use vars;
 
 # ----------------------
 
@@ -21,11 +34,24 @@ pass('All external modules loaded');
 
 my(@modules) = qw
 /
+	base
 	CGI
 	Digest::MD5
 	Data::Dumper
-	Test::More
+	DB_File
+	DBD::Pg
+	DBI
+	Digest::MD5
+	Fcntl
+	File::Basename
+	File::Spec
+	FreezeThaw
+	overload
+	Safe
 	Scalar::Util
+	Storable
+	strict
+	vars
 /;
 
 diag "Testing CGI::Session V $CGI::Session::VERSION";
