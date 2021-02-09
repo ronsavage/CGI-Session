@@ -3,6 +3,7 @@ Revision history for Perl extension CGI-Session.
 4.50  2021-02-09T15:26:00
 	- Add Env to modules required for testing.
 	- Add various modules to those required at runtime.
+	- Use 'use base ...' consistently.
 
 4.49  2021-02-08T17:43:00
 	- Adopt new repo structure. See

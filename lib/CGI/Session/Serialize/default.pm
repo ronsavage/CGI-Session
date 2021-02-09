@@ -1,15 +1,14 @@
 package CGI::Session::Serialize::default;
 
+use base 'CGI::Session::ErrorHandler';
 use strict;
+
 use Safe;
 use Data::Dumper;
-use CGI::Session::ErrorHandler;
 use Scalar::Util qw(blessed reftype refaddr);
 use Carp "croak";
 use vars qw( %overloaded );
 require overload;
-
-@CGI::Session::Serialize::default::ISA = ( "CGI::Session::ErrorHandler" );
 
 our $VERSION = '4.50';
 

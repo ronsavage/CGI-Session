@@ -1,13 +1,10 @@
 package CGI::Session::Driver::mysql;
 
-# $Id$
-
+use base 'CGI::Session::Driver::DBI';
 use strict;
 use Carp;
-use CGI::Session::Driver::DBI;
 
-@CGI::Session::Driver::mysql::ISA       = qw( CGI::Session::Driver::DBI );
-$CGI::Session::Driver::mysql::VERSION   = '4.43';
+our $VERSION = '4.50';
 
 sub _mk_dsnstr {
     my ($class, $dsn) = @_;

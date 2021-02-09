@@ -1,11 +1,12 @@
 package CGI::Session;
-use strict;
-use Carp;
-use CGI::Session::ErrorHandler;
 
-@CGI::Session::ISA      = qw( CGI::Session::ErrorHandler );
-$CGI::Session::NAME     = 'CGISESSID';
-$CGI::Session::IP_MATCH = 0;
+our $VERSION = '4.50';
+use strict;
+
+use Carp;
+
+$CGI::Session::NAME		= 'CGISESSID';
+$CGI::Session::IP_MATCH	= 0;
 
 our $VERSION = '4.50';
 

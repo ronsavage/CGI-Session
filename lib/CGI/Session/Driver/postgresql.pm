@@ -1,7 +1,5 @@
 package CGI::Session::Driver::postgresql;
 
-# $Id$
-
 # CGI::Session::Driver::postgresql - PostgreSQL driver for CGI::Session
 #
 # Copyright (C) 2002 Cosimo Streppone, cosimo@cpan.org
@@ -9,15 +7,13 @@ package CGI::Session::Driver::postgresql;
 # by Sherzod Ruzmetov, original author of CGI::Session modules
 # and CGI::Session::Driver::mysql driver.
 
+use base 'CGI::Session::Driver:DBI';
 use strict;
-use Carp "croak";
 
-use CGI::Session::Driver::DBI;
+use Carp "croak";
 use DBD::Pg qw(PG_BYTEA PG_TEXT);
 
-$CGI::Session::Driver::postgresql::VERSION = '4.43';
-@CGI::Session::Driver::postgresql::ISA     = qw( CGI::Session::Driver::DBI );
-
+our $VERSION = '4.50';
 
 sub init {
     my $self = shift;
@@ -50,7 +46,7 @@ sub store {
         # There is a race condition were two clients could run this code concurrently,
         # and both end up trying to insert. That's why we check for "duplicate" below
         my $sth = $dbh->prepare(
-             "INSERT INTO " . $self->table_name . " ($self->{DataColName},$self->{IdColName})  SELECT ?, ? 
+             "INSERT INTO " . $self->table_name . " ($self->{DataColName},$self->{IdColName})  SELECT ?, ?
                 WHERE NOT EXISTS (SELECT 1 FROM " . $self->table_name . " WHERE $self->{IdColName}=? LIMIT 1)");
 
         $sth->bind_param(1,$datastr,{ pg_type => $type });
@@ -63,15 +59,15 @@ sub store {
             $sth->bind_param(1,$datastr,{ pg_type => $type });
             $sth->bind_param(2,$sid);
             $sth->execute;
-        } 
+        }
         else {
             # Nothing. Our insert has already happened
         }
     };
-    if ($@) { 
+    if ($@) {
       return $self->set_error( "store(): failed with message: $@ " . $dbh->errstr );
 
-    } 
+    }
     else {
         return 1;
 

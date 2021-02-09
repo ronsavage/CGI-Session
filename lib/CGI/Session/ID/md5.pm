@@ -1,13 +1,10 @@
 package CGI::Session::ID::md5;
 
-# $Id$
-
+use base 'CGI::Session::ErrorHandler';
 use strict;
 use Digest::MD5;
-use CGI::Session::ErrorHandler;
 
-$CGI::Session::ID::md5::VERSION = '4.43';
-@CGI::Session::ID::md5::ISA     = qw( CGI::Session::ErrorHandler );
+our $VERSION = '4.50';
 
 *generate = \&generate_id;
 sub generate_id {
@@ -32,7 +29,7 @@ CGI::Session::ID::md5 - default CGI::Session ID generator
 
 =head1 DESCRIPTION
 
-CGI::Session::ID::MD5 is to generate MD5 encoded hexadecimal random ids. The library does not require any arguments. 
+CGI::Session::ID::MD5 is to generate MD5 encoded hexadecimal random ids. The library does not require any arguments.
 
 =head1 LICENSING
 

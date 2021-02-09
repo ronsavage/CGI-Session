@@ -1,11 +1,9 @@
 package CGI::Session::Driver;
 
+use base 'CGI::Session::ErrorHandler';
 use strict;
 
 use Carp;
-use CGI::Session::ErrorHandler;
-
-@CGI::Session::Driver::ISA = qw(CGI::Session::ErrorHandler);
 
 our $VERSION = '4.50';
 

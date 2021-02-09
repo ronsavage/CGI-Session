@@ -139,9 +139,17 @@ my(%params) =
 	PL_FILES     => {},
 	PREREQ_PM    =>
 	{
+		'base'				=> 0,
 		'CGI'               => 3.26,
 		'Digest::MD5'       => 0,
 		'Data::Dumper'      => 0,
+		'DB_File'			=> 0,
+		'DBD::Pg'			=> 0,
+		'DBI'				=> 0,
+		'Digest::MD5'		=> 0,
+		'Fcntl'				=> 0,
+		'File::Basename'	=> 0,
+		'File::Spec'		=> 0,
 		'FreezeThaw'		=> 0,
 		'overload'			=> 0,
 		'Safe'				=> 0,

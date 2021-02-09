@@ -1,11 +1,11 @@
 package CGI::Session::ID::static;
+
 use base 'CGI::Session::ErrorHandler';
-
 use strict;
-use Carp 'croak';
-use CGI::Session::ErrorHandler;
 
-$CGI::Session::ID::static::VERSION = '4.44';
+use Carp 'croak';
+
+our $VERSION = '4.50';
 
 sub generate_id {
     my ($self, $args, $claimed_id ) = @_;
@@ -16,6 +16,7 @@ sub generate_id {
 }
 
 1;
+
 __END__
 
 =head1 NAME

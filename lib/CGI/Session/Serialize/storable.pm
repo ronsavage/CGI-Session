@@ -1,10 +1,9 @@
 package CGI::Session::Serialize::storable;
 
+use base 'CGI::Session::ErrorHandler';
 use strict;
-use Storable;
-require CGI::Session::ErrorHandler;
 
-@CGI::Session::Serialize::storable::ISA = ( "CGI::Session::ErrorHandler" );
+use Storable;
 
 our $VERSION = '4.50';
 

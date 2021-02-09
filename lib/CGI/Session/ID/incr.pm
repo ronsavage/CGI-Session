@@ -1,16 +1,12 @@
 package CGI::Session::ID::incr;
 
-# $Id$
-
+use base 'CGI::Session::ErrorHandler';
 use strict;
 use File::Spec;
 use Carp "croak";
 use Fcntl qw( :DEFAULT :flock );
-use CGI::Session::ErrorHandler;
 
-$CGI::Session::ID::incr::VERSION = '4.43';
-@CGI::Session::ID::incr::ISA     = qw( CGI::Session::ErrorHandler );
-
+our $VERSION = '4.50';
 
 sub generate_id {
     my ($self, $args) = @_;

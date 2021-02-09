@@ -1,15 +1,13 @@
 package CGI::Session::Driver::sqlite;
 
-# $Id$
-
+use base 'CGI::Session::Driver::DBI';
 use strict;
 
 use File::Spec;
-use base 'CGI::Session::Driver::DBI';
 use DBI qw(SQL_BLOB);
 use Fcntl;
 
-$CGI::Session::Driver::sqlite::VERSION    = '4.43';
+our $VERSION = '4.50';
 
 sub init {
     my $self = shift;
@@ -19,7 +17,7 @@ sub init {
     }
 
     $self->SUPER::init() or return;
-    
+
     $self->{Handle}->{sqlite_handle_binary_nulls} = 1;
     return 1;
 }
